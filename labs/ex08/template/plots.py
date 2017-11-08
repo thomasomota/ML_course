@@ -19,7 +19,7 @@ def plot_cluster(data, mu, colors, ax):
     distance_matrix = build_distance_matrix(data, mu)
     # get the assignments for each point.
     assignments = np.argmin(distance_matrix, axis=1)
-    #
+
     for k_th in range(mu.shape[0]):
         rows, cols = np.where(assignments == k_th)
         data_of_kth_cluster = data[rows, :]

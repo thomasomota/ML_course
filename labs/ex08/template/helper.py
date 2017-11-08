@@ -34,15 +34,39 @@ def load_image(path):
     return misc.imread(path)
 
 
+#def build_distance_matrix(data, mu):
+#    """build a distance matrix.
+#
+#    row of the matrix represents the data point,
+#    column of the matrix represents the k-th cluster.
+#    """
+#    distance_list = []
+#    num_cluster, _ = mu.shape
+#    for k_th in range(num_cluster):
+#        sum_squares = np.sum(np.square(data - mu[k_th, :]), axis=1)
+#        distance_list.append(sum_squares)
+#    return np.matrix(distance_list).T
+
+
 def build_distance_matrix(data, mu):
     """build a distance matrix.
-
-    row of the matrix represents the data point,
-    column of the matrix represents the k-th cluster.
+    return
+        distance matrix:
+            row of the matrix represents the data point,
+            column of the matrix represents the k-th cluster.
     """
-    distance_list = []
-    num_cluster, _ = mu.shape
-    for k_th in range(num_cluster):
-        sum_squares = np.sum(np.square(data - mu[k_th, :]), axis=1)
-        distance_list.append(sum_squares)
-    return np.matrix(distance_list).T
+    
+    number_of_datapoints = data.shape[0]
+    number_of_k = mu.shape[0]
+    
+    distance_matrix = np.empty([number_of_datapoints,number_of_k])
+    
+    for datapoint_index in range(number_of_datapoints):
+        for k_index in range(number_of_k):
+            
+            datapoint = data[datapoint_index]
+            mu_val = mu[k_index]
+            distance = np.linalg.norm(datapoint - mu_val)
+            distance_matrix[datapoint_index][k_index] = distance
+            
+    return np.matrix(distance_matrix)
